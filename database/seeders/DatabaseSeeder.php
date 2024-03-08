@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             
             CourseSeeder::class,
             RoleSeeder::class,
+            UserSeeder::class,
             EnrollmentSeeder::class,
             ReportSeeder::class,
             StudentSeeder::class,

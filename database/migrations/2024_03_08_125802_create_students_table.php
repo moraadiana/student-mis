@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('lname');
             $table->string('address');
             $table->string('contact');
-            $table->string('dob');
+            $table->date('dob');
             $table->string('gender');
             //foreign key to users table
             $table->unsignedBigInteger('user_id');
