@@ -16,7 +16,7 @@ class ReportSeeder extends Seeder
         //create report 
         Report::create(
             [
-                'reports_name' => 'Report 1',
+                'name' => 'Report 1',
             ]
             );
     }

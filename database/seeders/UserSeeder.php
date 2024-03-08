@@ -15,10 +15,10 @@ class UserSeeder extends Seeder
     {
         //make user recode
         User::create([
-            'users_username' => 'admin',
-            'users_password' => bcrypt('admin'),
-            'users_email' => 'admin@gmail.com',
-            'roles_id' => 1
+            'username' => 'admin',
+            'password' => bcrypt('admin'),
+            'email' => 'admin@gmail.com',
+            'role_id' => 1
         ]);
     }
 }

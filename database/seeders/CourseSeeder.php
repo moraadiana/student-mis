@@ -17,7 +17,7 @@ class CourseSeeder extends Seeder
 
         Course::create(
             [
-                'courses_name' => 'Computer Science',
+                'name' => 'Computer Science',
                 'start_date' => now(),
                 'end_date' => now()->addDays(30)
             ],
