@@ -12,8 +12,6 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $table = 'students';
-    protected $primaryKey = 'id';
     protected $fillable =[
         'fname',
         'lname',
@@ -37,7 +35,7 @@ class Student extends Model
 
     public function enrollments(): HasMany
     {
-        return $this->hasMany(Enrollment::class, 'student_id');
+        return $this->hasMany(Enrollment::class);
     }
 
 }
