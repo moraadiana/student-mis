@@ -10,20 +10,20 @@ class Course extends Model
 {
     use HasFactory;
     protected $table = 'courses';
-    protected $primaryKey = 'courses_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'courses_id',
-        'course_name',
+        'id',
+        'name',
         'start_date',
         'end_date',
     ];
 
     public function enrollments(): HasMany
     {
-        return $this->hasMany(Enrollment::class, 'courses_id');
+        return $this->hasMany(Enrollment::class, 'course_id');
     }
-    
+
 
 
 

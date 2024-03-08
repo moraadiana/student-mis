@@ -13,15 +13,15 @@ class Student extends Model
     use HasFactory;
 
     protected $table = 'students';
-    protected $primaryKey = 'students_id';
+    protected $primaryKey = 'id';
     protected $fillable =[
-        'students_fname',
-        'students_lname',
-        'students_email',
-        'students_address',
-        'students_contact',
-        'students_dob',
-        'students_gender',
+        'fname',
+        'lname',
+        'email',
+        'address',
+        'contact',
+        'dob',
+        'gender',
 
     ];
 
@@ -32,12 +32,12 @@ class Student extends Model
 
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(Course::class, 'enrollments', 'students_id', 'courses_id');
+        return $this->belongsToMany(Course::class, 'enrollments', 'student_id', 'course_id');
     }
 
     public function enrollments(): HasMany
     {
-        return $this->hasMany(Enrollment::class, 'students_id');
+        return $this->hasMany(Enrollment::class, 'student_id');
     }
 
 }
