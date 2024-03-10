@@ -1,21 +1,41 @@
-import './bootstrap';
-import '../css/app.css';
+import "./bootstrap";
+import "../css/app.css";
+import { createRoot } from "react-dom/client";
+import { createInertiaApp } from "@inertiajs/react";
+import { ConfigProvider } from "antd";
+import enUS from "antd/lib/locale/en_US";
+import AuthenticatedLayout from "./Layouts/AuthenticatedLayout";
 
-import { createRoot } from 'react-dom/client';
-import { createInertiaApp } from '@inertiajs/react';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || "Student MIS";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
+    resolve: (name) => {
+        const pages = import.meta.glob("./Pages/**/*.jsx", { eager: true });
+        let page = pages[`./Pages/${name}.jsx`];
+        page.default.layout =
+            page.default.layout ||
+            ((page) => <AuthenticatedLayout children={page} />);
+        return page;
+    },
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        root.render(
+            <ConfigProvider
+                locale={enUS}
+                theme={{
+                    token: {
+                        fontFamily: "Lato, sans-serif",
+                        colorPrimary: "#153037",
+                    },
+                }}
+            >
+                <App {...props} />
+            </ConfigProvider>
+        );
     },
     progress: {
-        color: '#4B5563',
+        color: "#153037",
     },
 });
