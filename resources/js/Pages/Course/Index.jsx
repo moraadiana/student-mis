@@ -2,14 +2,14 @@ import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
 
-export default function Index({users}) {
-   
+export default function Index({course}) {
+   console.log(course);
     return (
         <>
-            <Head title="Users" />
+            <Head title="Courses" />
             <PageContainer
                 header={{
-                    title: "Users",
+                    title: "Courses",
                     onBack: () => window.history.back(),
                 }}
 
@@ -17,43 +17,48 @@ export default function Index({users}) {
                     <Space>
                         <Button
                             type="primary"
-                            onClick={() => router.get(route("user.create"))}
+                            onClick={() => router.get(route("course.create"))}
                         >
-                            Add User
+                            Add Course
                         </Button>
                     </Space>
                 }
             >
                 <ProCard>
                     <ProTable
-                        headerTitle="Users"
-                        dataSource={users.data}
+                        headerTitle="Courses"
+                        dataSource={course?.data}
                         request={async (params) => {
                             params.page = params.current;
                             delete params?.current;
                             router.reload({
-                                only: ["users"],
+                                only: ["course"],
                                 data: params,
                             });
                             return {
-                                data: users?.data,
+                                data:course?.data,
                                 success: true,
-                                total: users?.total,
+                                total: course?.total,
                             };
                         }}
                         columns={[
+                           
                             {
-                                title: "Username",
-                                dataIndex: "username",
+                                title: "Course ID",
+                                dataIndex: "id",
                             },
                             {
-                                title: "Email",
-                                dataIndex: "email",
+                                title: "Course",
+                                dataIndex: "course",
                             },
                             {
-                                title: "Role",
-                                dataIndex: ["role", "name"],
+                                title: "start Date",
+                                dataIndex: "start_date",
 
+                            },
+                            {
+                                title: "end Date",
+                                dataIndex: "end_date",
                             },
                             // edit user link
                             
@@ -64,7 +69,7 @@ export default function Index({users}) {
                                     render: (_, record) => (
                                         <Link
                                             href={route(
-                                                "user.edit",
+                                                "course.edit",
                                                 record?.id
                                             )}
                                         >
@@ -76,8 +81,8 @@ export default function Index({users}) {
 
                         ]}
                         pagination={{
-                            pageSize: users?.per_page,
-                            total: users?.total,
+                            pageSize: course?.per_page,
+                            total: course?.total,
                             defaultPageSize: 10,
                         }}
                         //return what is being searched in the search bar

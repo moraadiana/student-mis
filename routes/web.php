@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('user', UserController::class);
+    // student route
+    Route::resource('student', StudentController::class);
+    //course route
+    Route::resource('course', CourseController::class);
 });
 
 //create a route for user management

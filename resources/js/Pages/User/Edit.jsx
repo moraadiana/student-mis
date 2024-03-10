@@ -7,24 +7,30 @@ import {
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
 
-export default function Create({ roles }) {
+export default function Edit({ roles, user }) {
+    console.log (user);
     return (
         <PageContainer
             header={{
-                title: "Create User",
+                title: "Edit User",
                 onBack: () => window.history.back(),
             }}
         >
             
-            <Head title="Create User" />
+            <Head title="Edit User" />
             <ProCard>
-                <ProForm
-                    onFinish={async (values) => {
-                        router.post(route("user.store"), {
-                            ...values,
-                        });
-                    }}
-                >
+            <ProForm
+                        onFinish={async (values) => {
+                            router.put(
+                                route("user.update", user.id),
+                                {
+                                    ...values,
+                                }
+                            
+                            );
+                        }}
+                        initialValues={user}
+                    >
                     <ProForm.Group>
                         <ProFormText
                             width="sm"
@@ -55,14 +61,9 @@ export default function Create({ roles }) {
                             name="password"
                             label="Password"
                             placeholder="Password"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                            type="password"
+                           
                         />
-                        {/* <ProFormSelect
+                        <ProFormSelect
                             width="sm"
                             //select a role
                             fieldProps={{
@@ -80,7 +81,7 @@ export default function Create({ roles }) {
                                     required: true,
                                 },
                             ]}
-                        /> */}
+                        />
                     </ProForm.Group>
                 </ProForm>
             </ProCard>

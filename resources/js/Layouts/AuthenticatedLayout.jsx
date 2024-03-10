@@ -75,12 +75,16 @@ export default function Authenticated({ children }) {
                     children: [
                         {
                             path: "/user",
-                            name: "All Users",
+                            name: "Users",
                         },
-                        // {
-                        //     path: route("user.create"),
-                        //     name: "Add User",
-                        // },
+                        {
+                            path: "/student",
+                            name: "Students",
+                        },
+                        {
+                            path: "/course",
+                            name: "Courses",
+                        }
                        
                     ],
                 },

@@ -41,23 +41,39 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
-        $request->validate([
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', 'min:8'],
-            'role_id' => ['required', 'exists:roles,id']
+      // dd ($request->all());
+        //store data in database set default role
+        $user = User::create([
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'role_id' => 2,
         ]);
-       
 
-        User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role_id' => $request->role_id
-
-        ]);
 
         return redirect()->route('user.index')->with('success', 'User created successfully');
+    }
+
+    public function edit(User $user)
+    {
+        return Inertia::render(
+            'User/Edit',
+            [
+                'user' => $user->load('role'),
+                'roles' => Role::all()
+            ]
+
+        );
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $user->update([
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'role_id' => $request->input('role_id'),
+        ]);
+        return redirect()->route('user.index')->with('success', 'User updated successfully');
     }
 }
