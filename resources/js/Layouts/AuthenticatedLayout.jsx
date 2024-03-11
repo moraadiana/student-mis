@@ -79,13 +79,16 @@ export default function Authenticated({ children }) {
                         },
                         {
                             path: "/student",
-                            name: "Students",
+                            name: "Personal Details",
                         },
                         {
                             path: "/course",
                             name: "Courses",
-                        }
-                       
+                        },
+                       {
+                           path: "/enrollment",
+                           name: "My Courses",
+                       }
                     ],
                 },
             ]}

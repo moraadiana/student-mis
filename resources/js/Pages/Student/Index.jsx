@@ -27,7 +27,7 @@ export default function Index({students}) {
                 <ProCard>
                     <ProTable
                         headerTitle="Students"
-                        dataSource={students.data}
+                        dataSource={students?.data}
                         request={async (params) => {
                             params.page = params.current;
                             delete params?.current;
@@ -77,6 +77,7 @@ export default function Index({students}) {
                                 title: "Gender",
                                 dataIndex: "gender",
                             },
+                          
                             
                             {
                                 title: "Action",

@@ -2,13 +2,15 @@ import {
     PageContainer,
     ProCard,
     ProForm,
+    ProFormDatePicker,
     ProFormSelect,
     ProFormSwitch,
     ProFormText,
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
+import { message } from "antd";
 
-export default function Create({ user }) {
+export default function Create({ user, courses,enrollments }) {
     return (
         <PageContainer
             header={{
@@ -20,8 +22,15 @@ export default function Create({ user }) {
             <ProCard>
                 <ProForm
                     onFinish={async (values) => {
-                        router.post(route("student.store"), {
-                            ...values,
+                        router.post(route("student.store"), values, {
+                            onSuccess: () => {
+                                message.success("Student created successfully");
+                                router.get(route("student.index"));
+                            },
+                            onError: () => {
+                                message.error("Failed to create student");
+                                router.get(route("student.index"));
+                            },
                         });
                     }}
                 >
@@ -48,7 +57,7 @@ export default function Create({ user }) {
                                 },
                             ]}
                         />
-                        
+
                         <ProFormText
                             width="sm"
                             name="address"
@@ -72,7 +81,7 @@ export default function Create({ user }) {
                             ]}
                         />
 
-                        <ProFormText
+                        <ProFormDatePicker
                             width="sm"
                             name="dob"
                             label="Date of Birth"
@@ -82,6 +91,7 @@ export default function Create({ user }) {
                                     required: true,
                                 },
                             ]}
+                            format = "YYYY-MM-DD"
                         />
 
                         <ProFormSelect
@@ -97,6 +107,60 @@ export default function Create({ user }) {
                                 {
                                     label: "Female",
                                     value: "Female",
+                                },
+                            ]}
+                        />
+
+                        <ProFormText
+                            width="sm"
+                            name="username"
+                            label="Username"
+                            placeholder="Username"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        />
+                        <ProFormText
+                            width="sm"
+                            name="email"
+                            label="Email"
+                            placeholder="Email"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        />
+
+                        <ProFormText.Password
+                            width="sm"
+                            name="password"
+                            label="Password"
+                            placeholder="Password"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        />
+                      <ProFormSelect
+                            width="sm"
+                            //select a course
+                            fieldProps={{
+                                mode: "multiple",
+                                options: courses.map((course) => ({
+                                    label: course.name,
+                                    value: course.id,
+                                })),
+                            }}
+                            name="course_id"
+                            label="Course"
+                            placeholder="Select a course"
+                            rules={[
+                                {
+                                    required: true,
                                 },
                             ]}
                         />

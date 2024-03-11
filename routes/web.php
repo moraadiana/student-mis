@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -44,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('student', StudentController::class);
     //course route
     Route::resource('course', CourseController::class);
+
+    //enrollment route
+    Route::resource('enrollment', EnrollmentController::class);
 });
 
 //create a route for user management

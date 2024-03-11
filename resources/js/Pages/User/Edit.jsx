@@ -22,10 +22,18 @@ export default function Edit({ roles, user }) {
             <ProForm
                         onFinish={async (values) => {
                             router.put(
-                                route("user.update", user.id),
+                                route("user.update", user.id),values,
                                 {
-                                    ...values,
+                                    onSuccess: () => {
+                                        message.success("User updated successfully");
+                                        router.get(route("student.index"));
+                                    },
+                                    onError: () => {
+                                        message.error("Failed to update user");
+                                        router.get(route("student.index"));
+                                    },
                                 }
+                                
                             
                             );
                         }}

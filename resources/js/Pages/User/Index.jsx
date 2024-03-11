@@ -3,7 +3,7 @@ import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
 
 export default function Index({users}) {
-   
+   console.log(users);
     return (
         <>
             <Head title="Users" />
@@ -27,7 +27,7 @@ export default function Index({users}) {
                 <ProCard>
                     <ProTable
                         headerTitle="Users"
-                        dataSource={users.data}
+                        dataSource={users?.data}
                         request={async (params) => {
                             params.page = params.current;
                             delete params?.current;
@@ -76,7 +76,7 @@ export default function Index({users}) {
 
                         ]}
                         pagination={{
-                            pageSize: users?.per_page,
+                            //pageSize: users?.per_page,
                             total: users?.total,
                             defaultPageSize: 10,
                         }}

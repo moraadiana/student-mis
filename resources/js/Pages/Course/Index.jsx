@@ -2,8 +2,8 @@ import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
 
-export default function Index({course}) {
-   console.log(course);
+export default function Index({courses}) {
+   console.log(courses);
     return (
         <>
             <Head title="Courses" />
@@ -27,18 +27,18 @@ export default function Index({course}) {
                 <ProCard>
                     <ProTable
                         headerTitle="Courses"
-                        dataSource={course?.data}
+                        dataSource={courses?.data}
                         request={async (params) => {
                             params.page = params.current;
                             delete params?.current;
                             router.reload({
-                                only: ["course"],
+                                only: ["courses"],
                                 data: params,
                             });
                             return {
-                                data:course?.data,
+                                data:courses?.data,
                                 success: true,
-                                total: course?.total,
+                                total: courses?.total,
                             };
                         }}
                         columns={[
@@ -48,8 +48,8 @@ export default function Index({course}) {
                                 dataIndex: "id",
                             },
                             {
-                                title: "Course",
-                                dataIndex: "course",
+                                title: "Course Name",
+                                dataIndex: "name",
                             },
                             {
                                 title: "start Date",
@@ -81,11 +81,10 @@ export default function Index({course}) {
 
                         ]}
                         pagination={{
-                            pageSize: course?.per_page,
-                            total: course?.total,
+                            pageSize: courses?.per_page,
+                            total: courses?.total,
                             defaultPageSize: 10,
                         }}
-                        //return what is being searched in the search bar
                         
                         rowKey="id"
                         search={false}

@@ -2,13 +2,15 @@ import {
     PageContainer,
     ProCard,
     ProForm,
+    ProFormDatePicker,
     ProFormSelect,
     ProFormSwitch,
     ProFormText,
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
-
-export default function Edit({ student }) {
+import { message } from "antd";
+export default function Edit({ student, courses}) {
+    console.log(student);
     return (
         <PageContainer
             header={{
@@ -20,8 +22,15 @@ export default function Edit({ student }) {
             <ProCard>
                 <ProForm
                     onFinish={async (values) => {
-                        router.put(route("student.store"), {
-                            ...values,
+                        router.put(route("student.update", student.id), values,{
+                            onSuccess: () => {
+                                message.success("Student updated successfully");
+                                router.get(route("student.index"));
+                            },
+                            onError: () => {
+                                message.error("Failed to update student");
+                                router.get(route("student.index"));
+                            },
                         });
                     }}
                     initialValues={student}
@@ -73,7 +82,7 @@ export default function Edit({ student }) {
                             ]}
                         />
 
-                        <ProFormText
+                        <ProFormDatePicker
                             width="sm"
                             name="dob"
                             label="Date of Birth"
@@ -83,6 +92,9 @@ export default function Edit({ student }) {
                                     required: true,
                                 },
                             ]}
+                            format="YYYY-MM-DD" // Specify the date format
+                            // disable future dates and current date
+                           
                         />
 
                         <ProFormSelect
@@ -101,6 +113,30 @@ export default function Edit({ student }) {
                                 },
                               
                             ]}
+                        />
+                         <ProFormSelect
+                             width="sm"
+                             //select a course
+                             fieldProps={{
+                                 mode: "multiple",
+                                 options: courses.map((course) => ({
+                                     label: course.name,
+                                     value: course.id,
+                                 })),
+                             }}
+                             name="course_id"
+                             label="Course"
+                             placeholder="Select a course"
+                             rules={[
+                                 {
+                                     required: true,
+                                 },
+                             ]}
+                             initialValue={student.course_id}
+                          
+
+
+                          
                         />
                     </ProForm.Group>
                 </ProForm>

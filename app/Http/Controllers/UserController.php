@@ -11,19 +11,11 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::with('role')
-            ->orderBy('created_at', 'desc')
-            ->paginate($request->input('per_page', 10));
+       
 
-
-
-        return Inertia::render(
-            'User/Index',
-            [
-                'users' => $users,
-                //'role' => Role::all()
-            ]
-        );
+        return Inertia::render('User/Index', [
+            'users' => Inertia::lazy(fn () => User::with ('role')->orderBy('created_at', 'desc')->paginate($request->pageSize)),
+        ]);
     }
     public function create()
     {
