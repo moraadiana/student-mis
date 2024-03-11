@@ -1,9 +1,8 @@
 import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
-import { Space, Button, Tag } from "antd";
+import { Space, Button } from "antd";
 
-export default function Index({ enrollment,student , course }) {
-    console.log(enrollment);
+export default function Index({ enrollment, courses }) {
     return (
         <>
             <Head title="Enrollments" />
@@ -17,15 +16,15 @@ export default function Index({ enrollment,student , course }) {
                         <Button
                             type="primary"
                             onClick={() =>
-                                router.get(route("enrollment.create"))
+                                router.get(route("enrollment.edit"))
                             }
                         >
-                            Enroll
+                            Update
                         </Button>
                     </Space>
                 }
             >
-                <ProCard>
+                   <ProCard>
                     <ProTable
                         headerTitle="Enrollment"
                         dataSource={enrollment?.data}
@@ -47,25 +46,43 @@ export default function Index({ enrollment,student , course }) {
                                 title: "Course",
                                 dataIndex: ["course", "name"],
                             },
-                            {
-                                title: "Student",
-                                dataIndex: "student", 
-                                render: (student) => `${student.fname} ${student.lname}`
-                            },
 
                             {
                                 title: "Action",
-                                dataIndex: "id",
-                                hideInSearch: true,
+                                //add link to course.edit 
                                 render: (_, record) => (
                                     <Link
-                                        href={route("course.edit", record?.id)}
+                                        href={route(
+                                            "enrollment.edit",
+                                            record?.id
+                                        )}
                                     >
                                         Edit
                                     </Link>
                                 ),
-                            },
+                            }
                         ]}
+                        expandable={{
+                            expandedRowRender: (record) => (
+                                <ProTable
+                                    
+                                    dataSource={courses.find(course => course.id === record.course.id)?.students}
+                                    columns={[
+                                        {
+                                            title: "Student",
+                                            dataIndex: "fname",
+                                            render: (_, student) => `${student.fname} ${student.lname}`,
+                                        },
+                                    ]}
+                                    rowKey="id"
+                                    search={false}
+                                    pagination={false}
+                                    options={false}
+                                    bordered
+                                />
+                            ),
+                        }}
+                        // Pagination, rowKey, and other settings...
                         pagination={{
                             pageSize: enrollment?.per_page,
                             total: enrollment?.total,

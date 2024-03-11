@@ -2,7 +2,7 @@ import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
 
-export default function Index({courses}) {
+export default function Index({courses, user}) {
    console.log(courses);
     return (
         <>
@@ -14,6 +14,7 @@ export default function Index({courses}) {
                 }}
 
                 extra={
+                    user.role_id === 1 && (
                     <Space>
                         <Button
                             type="primary"
@@ -22,6 +23,7 @@ export default function Index({courses}) {
                             Add Course
                         </Button>
                     </Space>
+                    )
                 }
             >
                 <ProCard>
@@ -62,7 +64,7 @@ export default function Index({courses}) {
                             },
                             // edit user link
                             
-                                {
+                            user.role_id === 1 && { 
                                     title: "Action",
                                     dataIndex: "id",
                                     hideInSearch: true,

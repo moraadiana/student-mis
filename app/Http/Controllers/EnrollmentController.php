@@ -13,9 +13,16 @@ class EnrollmentController extends Controller
     //
     public function index(Request $request)
     {
-        return Inertia::render('Enrollment/Index', [
-            'enrollment' => Inertia::lazy(fn () => Enrollment::with('student', 'course')->orderBy('created_at', 'desc')->paginate($request->pageSize)),
-        ]);
+         // Fetch enrollments with associated students and courses
+         $enrollments = Enrollment::with('student', 'course')->orderBy('created_at', 'desc')->paginate($request->pageSize);
+
+         // Fetch students for each course
+         $courses = Course::with('students')->get();
+ 
+         return Inertia::render('Enrollment/Index', [
+             'enrollment' => $enrollments,
+             'courses' => $courses,
+         ]);
     }
 
     public function create()
@@ -30,16 +37,9 @@ class EnrollmentController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // dd($request->all());
-        // Enrollment::create([
-        //     //store multiple data
-        //     'student_id' => $request->input('student_id'),
-        //     'course_id' => $request->input('course_id'),
-
-
-        // ]);
-        //store multiple entry
+    {  $enrollment = Enrollment::where('student_id', $request->input('student_id'))
+        ->where('course_id', $request->input('course_id'))
+        ->first();
 
         $enrollment = new Enrollment();
         $enrollment->student_id = $request->input('student_id');
@@ -55,4 +55,13 @@ class EnrollmentController extends Controller
 
         ]);
     }
+    public function edit(Enrollment $enrollment)
+{
+    $enrollment = $enrollment->load('student', 'course'); // Eager load student and course relations
+    return Inertia::render('Enrollment/Edit', [
+        'enrollment' => $enrollment,
+        'courses' => Course::all(),
+        'students' => Student::all()
+    ]);
+}
 }

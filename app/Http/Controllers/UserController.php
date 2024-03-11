@@ -29,12 +29,23 @@ class UserController extends Controller
         );
     }
 
-    //store fnction
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User deleted successfully');
+    }
 
     public function store(Request $request)
     {
-      // dd ($request->all());
-        //store data in database set default role
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'role_id' => 'required|exists:roles,id'
+        ]);
+        //throw error if user/email already exists
+       
+
         $user = User::create([
             'username' => $request->input('username'),
             'email' => $request->input('email'),
@@ -60,6 +71,14 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8',
+            'role_id' => 'required|exists:roles,id'
+        ]);
+
+
         $user->update([
             'username' => $request->input('username'),
             'email' => $request->input('email'),

@@ -2,18 +2,19 @@ import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
 
-export default function Index({students}) {
+export default function Index({students,user}) {
    
     return (
         <>
-            <Head title=" AllStudents" />
+            <Head title=" All Students" />
             <PageContainer
                 header={{
-                    title: "Students",
+                    title: "Personal Details",
                     onBack: () => window.history.back(),
                 }}
 
                 extra={
+                    user.role_id === 1 && (
                     <Space>
                         <Button
                             type="primary"
@@ -22,11 +23,12 @@ export default function Index({students}) {
                             Add Student
                         </Button>
                     </Space>
+                    )
                 }
             >
                 <ProCard>
                     <ProTable
-                        headerTitle="Students"
+                       // headerTitle="Personal Details"
                         dataSource={students?.data}
                         request={async (params) => {
                             params.page = params.current;
@@ -59,9 +61,13 @@ export default function Index({students}) {
                                
                             },
                             {
-                                title: "address",
+                                title: " Home Address",
                                 dataIndex: "address",
                                 
+                            },
+                            {
+                                title: "Email",
+                                dataIndex: ["user", "email"],
                             },
                             {
                                 title: "Contact",

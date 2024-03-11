@@ -72,7 +72,7 @@ export default function Create({ roles }) {
                             ]}
                             type="password"
                         />
-                        {/* <ProFormSelect
+                        <ProFormSelect
                             width="sm"
                             //select a role
                             fieldProps={{
@@ -90,7 +90,7 @@ export default function Create({ roles }) {
                                     required: true,
                                 },
                             ]}
-                        /> */}
+                        />
                     </ProForm.Group>
                 </ProForm>
             </ProCard>

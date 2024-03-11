@@ -9,8 +9,6 @@ export default function Dashboard({ auth })
     return (
       <>
 
-
-
         <Head title = "Dashboard"/>
         <ProCard
         title={`Hi ${auth.user.username}`}

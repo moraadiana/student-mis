@@ -14,11 +14,11 @@ export default function Create({ user, courses,enrollments }) {
     return (
         <PageContainer
             header={{
-                title: "Create Student",
+                title: "New Student Admission",
                 onBack: () => window.history.back(),
             }}
         >
-            <Head title="Create Student" />
+            <Head title="New Student Admission" />
             <ProCard>
                 <ProForm
                     onFinish={async (values) => {
@@ -43,6 +43,7 @@ export default function Create({ user, courses,enrollments }) {
                             rules={[
                                 {
                                     required: true,
+                                    
                                 },
                             ]}
                         />
@@ -61,7 +62,7 @@ export default function Create({ user, courses,enrollments }) {
                         <ProFormText
                             width="sm"
                             name="address"
-                            label="Address"
+                            label="Home Address"
                             placeholder="Address"
                             rules={[
                                 {

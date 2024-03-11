@@ -9,16 +9,16 @@ import {
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
 import { message } from "antd";
-export default function Edit({ student, courses}) {
-    console.log(student);
+export default function Edit({ student, courses, user}) {
+    console.log(user.role_id === 1);
     return (
         <PageContainer
             header={{
-                title: "Edit Student",
+                title: "Update Student Details",
                 onBack: () => window.history.back(),
             }}
         >
-            <Head title="Edit Student" />
+            <Head title="Update Student Details" />
             <ProCard>
                 <ProForm
                     onFinish={async (values) => {
@@ -114,30 +114,30 @@ export default function Edit({ student, courses}) {
                               
                             ]}
                         />
-                         <ProFormSelect
-                             width="sm"
-                             //select a course
-                             fieldProps={{
-                                 mode: "multiple",
-                                 options: courses.map((course) => ({
-                                     label: course.name,
-                                     value: course.id,
-                                 })),
-                             }}
-                             name="course_id"
-                             label="Course"
-                             placeholder="Select a course"
-                             rules={[
-                                 {
-                                     required: true,
-                                 },
-                             ]}
-                             initialValue={student.course_id}
-                          
-
-
-                          
-                        />
+                        
+                        
+                            { user.role_id === 1 && (
+                                
+                            
+                                <ProFormSelect
+                                width="sm"
+                                //select a course
+                                fieldProps={{
+                                    mode: "multiple",
+                                    options: courses.map((course) => ({
+                                        label: course.name,
+                                        value: course.id,
+                                    })),
+                                }}
+                                name="course_id"
+                                label="Course"
+                                placeholder="Select a course"
+                                rules={[{ required: true }]}
+                                // set initial values as they are in the database for this student
+                                initialValue={student.enrollments.map((enrollment) => enrollment.course_id)}
+                            />
+                       
+                            )}
                     </ProForm.Group>
                 </ProForm>
             </ProCard>
