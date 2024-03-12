@@ -59,7 +59,7 @@ class StudentController extends Controller
         // dd ($request->all());
         //store data in database set default role
         $request->validate([
-            'username' => 'required|string|max:255',
+            
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'fname' => 'required|string|max:255',
@@ -95,6 +95,7 @@ class StudentController extends Controller
         $courseIds =  $request->input('course_id', []);
 
         //enroll student to selected courses
+        
         foreach ($courseIds as $courseId) {
             $enrollment = new Enrollment();
             $enrollment->student_id = $user->student->id;
@@ -118,20 +119,7 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student)
     {
-        $request->validate([
-        'username' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|string|min:8',
-        'fname' => 'required|string|max:255',
-        'lname' => 'required|string|max:255',
-        'dob' => 'required|date|before:today',
-        'gender' => 'required|in:Male,Female,Other',
-        'address' => 'required|string|max:255',
-        'contact' => 'required|string|max:20',
-        'course_id' => 'required|array',
-        'course_id.*' => 'exists:courses,id',
-    ]);
-
+       
         $student->update([
             'fname' => $request->input('fname'),
             'lname' => $request->input('lname'),

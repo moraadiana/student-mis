@@ -42,10 +42,10 @@ export default function Index({users}) {
                             };
                         }}
                         columns={[
-                            {
-                                title: "Username",
-                                dataIndex: "username",
-                            },
+                            // {
+                            //     title: "Username",
+                            //     dataIndex: "username",
+                            // },
                             {
                                 title: "Email",
                                 dataIndex: "email",

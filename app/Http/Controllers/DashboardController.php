@@ -11,12 +11,21 @@ use Inertia\Inertia;
  
 class DashboardController extends Controller
 {
+    //
+    public function __invoke()
+    {
+        return Inertia::render('Dashboard' , [
+            'users' => User::all()
+           
+
+        ]);
+    }
     public function index()
     {
         $totalStudentsCount = Student ::count();
-        $totalCoursesCount = Course ::count();
+        $totalCoursesCount = Course::count();
         $totalFemaleStudents = Student ::where('gender', 'Female')->count();
-        $totalMaleStudents = Student ::where('gender', 'Male')->count();
+        $totalMaleStudents = Student::where('gender', 'Male')->count();
         $enrolledCourses = Enrollment ::with('student', 'course') ->get();
         
         return Inertia::render('Dashboard',

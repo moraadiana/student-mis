@@ -3,6 +3,9 @@ import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button } from "antd";
 
 export default function Index({ enrollment, courses }) {
+    //group students by course
+    
+    console.log(courses)
     return (
         <>
             <Head title="Enrollments" />
@@ -44,23 +47,13 @@ export default function Index({ enrollment, courses }) {
                         columns={[
                             {
                                 title: "Course",
-                                dataIndex: ["course", "name"],
+                                dataIndex: "course",
+                                render: (_, record) => `${record.course.name}`,
+                                
+                                
                             },
 
-                            // {
-                            //     title: "Action",
-                            //     //add link to course.edit 
-                            //     render: (_, record) => (
-                            //         <Link
-                            //             href={route(
-                            //                 "course.edit",
-                            //                 record?.id
-                            //             )}
-                            //         >
-                            //             Edit
-                            //         </Link>
-                            //     ),
-                            // }
+                           
                         ]}
                         expandable={{
                             expandedRowRender: (record) => (
@@ -73,6 +66,20 @@ export default function Index({ enrollment, courses }) {
                                             dataIndex: "fname",
                                             render: (_, student) => `${student.fname} ${student.lname}`,
                                         },
+                                        {
+                                        title: "Action",
+                                        hideInSearch: true,
+                                        render: (_, record) => (
+                                            <Link
+                                                href={route(
+                                                    "student.edit",
+                                                    record?.id
+                                                )}
+                                            >
+                                                Edit
+                                            </Link>
+                                        ),
+                                    },
                                     ]}
                                     rowKey="id"
                                     search={false}

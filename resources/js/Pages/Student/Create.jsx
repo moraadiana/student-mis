@@ -142,17 +142,7 @@ export default function Create({ user, courses, enrollments }) {
                             }}
                         />
 
-                        <ProFormText
-                            width="sm"
-                            name="username"
-                            label="Username"
-                            placeholder="Username"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        />
+                       
                         <ProFormText
                             width="sm"
                             name="email"

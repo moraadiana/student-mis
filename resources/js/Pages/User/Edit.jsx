@@ -40,7 +40,7 @@ export default function Edit({ roles, user }) {
                         initialValues={user}
                     >
                     <ProForm.Group>
-                        <ProFormText
+                        {/* <ProFormText
                             width="sm"
                             name="username"
                             label="Username"
@@ -51,7 +51,7 @@ export default function Edit({ roles, user }) {
                                 },
                             ]}
                            
-                        />
+                        /> */}
                         <ProFormText
                             width="sm"
                             name="email"
