@@ -22,7 +22,14 @@ export default function Create({ courses }) {
             <ProCard>
                 <ProForm
                     onFinish={async (values) => {
-                        console.log(values);
+                        const { name} = values;
+                        // check if course already exists
+                        const existingCourse = courses.find((course) => course.name === name);
+                        if (existingCourse) {
+                            message.error("Course already exists");
+                            return;
+                        }
+
                         router.post(route("course.store"), values,
                         {
                             onSuccess: () => {

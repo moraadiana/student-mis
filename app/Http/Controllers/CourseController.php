@@ -89,4 +89,9 @@ class CourseController extends Controller
 
         ]);
     }
+
+    public function destroy(Course $course)
+    {
+        $course->delete();
+    }
 }

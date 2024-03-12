@@ -16,7 +16,6 @@ export default function Create({ roles }) {
                 onBack: () => window.history.back(),
             }}
         >
-            
             <Head title="Create User" />
             <ProCard>
                 <ProForm
@@ -30,9 +29,7 @@ export default function Create({ roles }) {
                                 message.error("Failed to create user");
                                 router.get(route("user.index"));
                             },
-                        }
-                        );
-
+                        });
                     }}
                 >
                     <ProForm.Group>
@@ -46,7 +43,6 @@ export default function Create({ roles }) {
                                     required: true,
                                 },
                             ]}
-                           
                         />
                         <ProFormText
                             width="sm"
@@ -57,8 +53,12 @@ export default function Create({ roles }) {
                                 {
                                     required: true,
                                 },
+                                {
+                                    type: "email",
+                                    message:
+                                        "Please enter a valid email address",
+                                },
                             ]}
-                            type="email"
                         />
                         <ProFormText.Password
                             width="sm"
@@ -69,8 +69,33 @@ export default function Create({ roles }) {
                                 {
                                     required: true,
                                 },
+
+                                {
+                                    min: 10,
+                                    max: 15,
+                                    message:
+                                        "Password must be between 10 and 15 characters",
+                                },
+                                {
+                                    //must contain at least one uppercase letter and one lowercase letter
+                                    pattern: /^(?=.*[a-z])(?=.*[A-Z]).{10,15}$/,
+                                    message:
+                                        "Password must contain at least one uppercase and one lowercase letter",
+                                },
+                                {
+                                    //must contain at least one number
+                                    pattern: /^(?=.*\d).{10,15}$/,
+                                    message:
+                                        "Password must contain at least one number",
+                                },
+                                {
+                                    //must contain at least one special character
+                                    pattern:
+                                        /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{10,15}$/,
+                                    message:
+                                        "Password must contain at least one special character",
+                                },
                             ]}
-                            type="password"
                         />
                         <ProFormSelect
                             width="sm"

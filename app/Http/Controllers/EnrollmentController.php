@@ -37,7 +37,20 @@ class EnrollmentController extends Controller
     }
 
     public function store(Request $request)
-    {  $enrollment = Enrollment::where('student_id', $request->input('student_id'))
+    
+    {  
+        $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'course_id' => 'required|exists:courses,id',
+        ]);
+        $existingEnrollment = Enrollment::where('student_id', $request->input('student_id'))
+        ->where('course_id', $request->input('course_id'))
+        ->first();
+        if ($existingEnrollment) {
+            return redirect()->back()->with('error', 'Enrollment already exists for this student and course.');
+        }
+
+      $enrollment = Enrollment::where('student_id', $request->input('student_id'))
         ->where('course_id', $request->input('course_id'))
         ->first();
 

@@ -8,21 +8,21 @@ export default function Index({ enrollment, courses }) {
             <Head title="Enrollments" />
             <PageContainer
                 header={{
-                    title: "Enrollments",
+                    title: "Enrolled Students in Courses",
                     onBack: () => window.history.back(),
                 }}
-                extra={
-                    <Space>
-                        <Button
-                            type="primary"
-                            onClick={() =>
-                                router.get(route("enrollment.edit"))
-                            }
-                        >
-                            Update
-                        </Button>
-                    </Space>
-                }
+                // extra={
+                //     <Space>
+                //         <Button
+                //             type="primary"
+                //             onClick={() =>
+                //                 router.get(route("enrollment.create"))
+                //             }
+                //         >
+                //             Enroll Student
+                //         </Button>
+                //     </Space>
+                // }
             >
                    <ProCard>
                     <ProTable
@@ -47,20 +47,20 @@ export default function Index({ enrollment, courses }) {
                                 dataIndex: ["course", "name"],
                             },
 
-                            {
-                                title: "Action",
-                                //add link to course.edit 
-                                render: (_, record) => (
-                                    <Link
-                                        href={route(
-                                            "enrollment.edit",
-                                            record?.id
-                                        )}
-                                    >
-                                        Edit
-                                    </Link>
-                                ),
-                            }
+                            // {
+                            //     title: "Action",
+                            //     //add link to course.edit 
+                            //     render: (_, record) => (
+                            //         <Link
+                            //             href={route(
+                            //                 "course.edit",
+                            //                 record?.id
+                            //             )}
+                            //         >
+                            //             Edit
+                            //         </Link>
+                            //     ),
+                            // }
                         ]}
                         expandable={{
                             expandedRowRender: (record) => (

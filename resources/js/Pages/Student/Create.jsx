@@ -9,8 +9,9 @@ import {
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
 import { message } from "antd";
+import moment from "moment";
 
-export default function Create({ user, courses,enrollments }) {
+export default function Create({ user, courses, enrollments }) {
     return (
         <PageContainer
             header={{
@@ -43,7 +44,6 @@ export default function Create({ user, courses,enrollments }) {
                             rules={[
                                 {
                                     required: true,
-                                    
                                 },
                             ]}
                         />
@@ -73,11 +73,21 @@ export default function Create({ user, courses,enrollments }) {
                         <ProFormText
                             width="sm"
                             name="contact"
-                            label="Contact"
+                            label="Phone Number"
                             placeholder="Contact"
                             rules={[
                                 {
                                     required: true,
+                                },
+                                {
+                                    pattern: /^[0-9]+$/,
+
+                                    message: "Contact must be a number",
+                                },
+                                {
+                                    len: 10,
+                                    message:
+                                        "Contact must be a 10 digits number",
                                 },
                             ]}
                         />
@@ -91,8 +101,23 @@ export default function Create({ user, courses,enrollments }) {
                                 {
                                     required: true,
                                 },
+                                {
+                                    //must be less than current date
+                                    validator: (_, value) => {
+                                        if (value > moment().startOf("day")) {
+                                            return Promise.reject(
+                                                new Error(
+                                                    "Date of Birth must be less than current date"
+                                                )
+                                            );
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                    
+                                }
                             ]}
-                            format = "YYYY-MM-DD"
+                            format="YYYY-MM-DD"
+                            
                         />
 
                         <ProFormSelect
@@ -110,6 +135,11 @@ export default function Create({ user, courses,enrollments }) {
                                     value: "Female",
                                 },
                             ]}
+                            disabledDate={(current) => {
+                                return (
+                                    current && current > moment().startOf("day")
+                                );
+                            }}
                         />
 
                         <ProFormText
@@ -132,6 +162,12 @@ export default function Create({ user, courses,enrollments }) {
                                 {
                                     required: true,
                                 },
+
+                                {
+                                    type: "email",
+                                    message:
+                                        "Please enter a valid email address",
+                                },
                             ]}
                         />
 
@@ -144,9 +180,34 @@ export default function Create({ user, courses,enrollments }) {
                                 {
                                     required: true,
                                 },
+
+                                {
+                                    min: 10,
+                                    max: 15,
+                                    message: "Password must be between 10 and 15 characters",
+                                },
+                                {
+                                    //must contain at least one uppercase letter and one lowercase letter
+                                    pattern: /^(?=.*[a-z])(?=.*[A-Z]).{10,15}$/,
+                                    message: "Password must contain at least one uppercase and one lowercase letter",
+
+                                },
+                                {
+                                    //must contain at least one number
+                                    pattern: /^(?=.*\d).{10,15}$/,
+                                    message: "Password must contain at least one number",
+                                },
+                                {
+                                    //must contain at least one special character
+                                    pattern: /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{10,15}$/,
+                                    message: "Password must contain at least one special character",
+                                }
+
+
+
                             ]}
                         />
-                      <ProFormSelect
+                        <ProFormSelect
                             width="sm"
                             //select a course
                             fieldProps={{

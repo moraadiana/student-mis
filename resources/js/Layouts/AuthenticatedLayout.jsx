@@ -78,13 +78,13 @@ export default function Authenticated({ children }) {
                     children: [
                         {
                             path: "/user",
-                            name: "Users",
+                            name: "User Accounts",
                         },
 
-                        //    {
-                        //        path: "/enrollment",
-                        //        name: "Course Enrollments ",
-                        //    },
+                           {
+                               path: "/enrollment",
+                               name: "Course Enrollments ",
+                           },
                     ],
                 },
                 {

@@ -19,7 +19,7 @@ export default function Index({users}) {
                             type="primary"
                             onClick={() => router.get(route("user.create"))}
                         >
-                            Add User
+                            Add Administrator
                         </Button>
                     </Space>
                 }

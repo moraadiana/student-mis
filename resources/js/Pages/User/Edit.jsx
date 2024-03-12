@@ -69,7 +69,36 @@ export default function Edit({ roles, user }) {
                             name="password"
                             label="Password"
                             placeholder="Password"
-                           
+                            rules={[
+                                {
+                                    required: true,
+                                },
+
+                                {
+                                    min: 10,
+                                    max: 15,
+                                    message: "Password must be between 10 and 15 characters",
+                                },
+                                {
+                                    //must contain at least one uppercase letter and one lowercase letter
+                                    pattern: /^(?=.*[a-z])(?=.*[A-Z]).{10,15}$/,
+                                    message: "Password must contain at least one uppercase and one lowercase letter",
+
+                                },
+                                {
+                                    //must contain at least one number
+                                    pattern: /^(?=.*\d).{10,15}$/,
+                                    message: "Password must contain at least one number",
+                                },
+                                {
+                                    //must contain at least one special character
+                                    pattern: /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{10,15}$/,
+                                    message: "Password must contain at least one special character",
+                                }
+
+
+
+                            ]}
                         />
                         <ProFormSelect
                             width="sm"

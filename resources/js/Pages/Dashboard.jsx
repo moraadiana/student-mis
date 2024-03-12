@@ -15,6 +15,9 @@ export default function Dashboard({ auth })
         headerBordered
         style={{width: '100%'}}
 
+        // add reports
+        
+
         />
      </>   
     );
