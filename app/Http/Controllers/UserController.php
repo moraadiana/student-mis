@@ -87,4 +87,6 @@ class UserController extends Controller
         ]);
         return redirect()->route('user.index')->with('success', 'User updated successfully');
     }
+    //function to delete user and associated records
+    
 }

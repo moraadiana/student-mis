@@ -133,6 +133,13 @@ class StudentController extends Controller
         $courseIds =  $request->input('course_id', []);
         $student->courses()->sync($courseIds);
     }
+   // function to delete user and associated records
+
+    public function destroy(Student $student)
+    {
+        $student->delete();
+        return redirect()->route('student.index')->with('success', 'Student deleted successfully');
+    }
 
  
 }

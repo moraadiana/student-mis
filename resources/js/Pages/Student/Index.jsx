@@ -99,6 +99,30 @@ export default function Index({students,user}) {
                                     </Link>
                                 ),
                             },
+                            // {
+                            //     //button to delete record
+                            //     title: "Delete",
+                            //     hideInSearch: true,
+                            //     render: (_, record) => (
+                            //         <Button
+
+                            //             type="primary"
+                            //             danger
+                            //             onClick={() =>
+                            //                 // show warning message before deleting record
+                            //                 window.confirm("Are you sure you want to delete this record?") &&
+
+                            //                 router.delete(
+                            //                     route("student.destroy", record?.id)
+
+                            //                 )
+
+                            //             }
+                            //         >
+                            //             Delete
+                            //         </Button>
+                            //     ),
+                            // },
                         ]}
                         pagination={{
                             pageSize: students?.per_page,
