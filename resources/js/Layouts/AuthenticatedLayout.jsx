@@ -32,7 +32,7 @@ export default function Authenticated({ children }) {
             avatarProps={{
                 src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
                 size: "small",
-                title: user?.username,
+                title: user?.email,
 
                 render: (props, dom) => {
                     return (
@@ -73,7 +73,7 @@ export default function Authenticated({ children }) {
                    // hideInMenu: user.role_id === 2,
                    // visible for admin only
 
-                   // hideInMenu: user.role_id === 2,
+                    hideInMenu: user.role_id === 2,
 
                     children: [
                         {
@@ -99,7 +99,7 @@ export default function Authenticated({ children }) {
                         },
                         {
                             path: "/course",
-                            name: "Courses",
+                            name: "My Courses",
                         },
                     ],
                     // hideInMenu: user.role.id === 1,

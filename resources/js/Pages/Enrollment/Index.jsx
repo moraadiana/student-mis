@@ -2,10 +2,10 @@ import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button } from "antd";
 
-export default function Index({ enrollment, courses }) {
+export default function Index({ enrollment, courses,  students }) {
     //group students by course
     
-    console.log(courses)
+    console.log(students);
     return (
         <>
             <Head title="Enrollments" />
@@ -26,31 +26,54 @@ export default function Index({ enrollment, courses }) {
                 //         </Button>
                 //     </Space>
                 // }
+                extra={
+                    
+                    <Space>
+                        <Button
+                            type="primary"
+                            onClick={() => router.get(route("course.create"))}
+                        >
+                            Add Course
+                        </Button>
+                    </Space>
+                    
+                }
             >
                    <ProCard>
-                    <ProTable
-                        headerTitle="Enrollment"
-                        dataSource={enrollment?.data}
+                   <ProTable
+                        headerTitle="Courses"
+                        dataSource={courses}
                         request={async (params) => {
                             params.page = params.current;
                             delete params?.current;
                             router.reload({
-                                only: ["enrollment"],
+                                only: ["courses"],
                                 data: params,
                             });
                             return {
-                                data: enrollment?.data,
+                                data:courses,
                                 success: true,
-                                total: enrollment?.total,
+                                total: courses.total,
                             };
                         }}
                         columns={[
+                           
                             {
-                                title: "Course",
-                                dataIndex: "course",
-                                render: (_, record) => `${record.course.name}`,
-                                
-                                
+                                title: "Course ID",
+                                dataIndex: "id",
+                            },
+                            {
+                                title: "Course Name",
+                                dataIndex: "name",
+                            },
+                            {
+                                title: "start Date",
+                                dataIndex: "start_date",
+
+                            },
+                            {
+                                title: "end Date",
+                                dataIndex: "end_date",
                             },
 
                            
@@ -59,12 +82,16 @@ export default function Index({ enrollment, courses }) {
                             expandedRowRender: (record) => (
                                 <ProTable
                                     
-                                    dataSource={courses.find(course => course.id === record.course.id)?.students}
+                                    dataSource={record.students}
                                     columns={[
                                         {
                                             title: "Student",
-                                            dataIndex: "fname",
-                                            render: (_, student) => `${student.fname} ${student.lname}`,
+                                             // join fname and lname of student
+                                             dataIndex: "fname", 
+                                             render: (_, record) => `${record.fname} ${record.lname}`,
+
+
+                                            
                                         },
                                         {
                                         title: "Action",
@@ -91,8 +118,8 @@ export default function Index({ enrollment, courses }) {
                         }}
                         // Pagination, rowKey, and other settings...
                         pagination={{
-                            pageSize: enrollment?.per_page,
-                            total: enrollment?.total,
+                            pageSize: courses?.per_page,
+                            total: courses?.total,
                             defaultPageSize: 10,
                         }}
                         rowKey="id"

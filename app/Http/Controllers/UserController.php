@@ -38,7 +38,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            //'username' => 'required|string|max:255',
+            
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'role_id' => 'required|exists:roles,id'
@@ -47,7 +47,7 @@ class UserController extends Controller
        
 
         $user = User::create([
-            'username' => $request->input('username'),
+            
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
             'role_id' => 2,
@@ -71,16 +71,11 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'username' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8',
-            'role_id' => 'required|exists:roles,id'
-        ]);
+       
 
 
         $user->update([
-            'username' => $request->input('username'),
+            
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
             'role_id' => $request->input('role_id'),

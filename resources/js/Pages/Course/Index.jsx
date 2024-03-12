@@ -13,22 +13,11 @@ export default function Index({courses, user}) {
                     onBack: () => window.history.back(),
                 }}
 
-                extra={
-                    user.role_id === 1 && (
-                    <Space>
-                        <Button
-                            type="primary"
-                            onClick={() => router.get(route("course.create"))}
-                        >
-                            Add Course
-                        </Button>
-                    </Space>
-                    )
-                }
+               
             >
                 <ProCard>
                     <ProTable
-                        headerTitle="Courses"
+                        headerTitle="My Courses"
                         dataSource={courses?.data}
                         request={async (params) => {
                             params.page = params.current;

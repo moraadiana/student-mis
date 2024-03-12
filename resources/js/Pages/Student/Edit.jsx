@@ -10,8 +10,7 @@ import {
 import { Head, router } from "@inertiajs/react";
 import { message } from "antd";
 import moment from "moment";
-export default function Edit({ student, courses, user}) {
-    console.log(user.role_id === 1);
+export default function Edit({ student, courses, user, auth }) {
     return (
         <PageContainer
             header={{
@@ -23,16 +22,22 @@ export default function Edit({ student, courses, user}) {
             <ProCard>
                 <ProForm
                     onFinish={async (values) => {
-                        router.put(route("student.update", student.id), values,{
-                            onSuccess: () => {
-                                message.success("Student updated successfully");
-                                router.get(route("student.index"));
-                            },
-                            onError: () => {
-                                message.error("Failed to update student");
-                                router.get(route("student.index"));
-                            },
-                        });
+                        router.put(
+                            route("student.update", student.id),
+                            values,
+                            {
+                                onSuccess: () => {
+                                    message.success(
+                                        "Student updated successfully"
+                                    );
+                                    router.get(route("student.index"));
+                                },
+                                onError: () => {
+                                    message.error("Failed to update student");
+                                    router.get(route("student.index"));
+                                },
+                            }
+                        );
                     }}
                     initialValues={student}
                 >
@@ -59,7 +64,7 @@ export default function Edit({ student, courses, user}) {
                                 },
                             ]}
                         />
-                        
+
                         <ProFormText
                             width="sm"
                             name="address"
@@ -92,7 +97,7 @@ export default function Edit({ student, courses, user}) {
                                 {
                                     required: true,
                                 },
-                                 {
+                                {
                                     //must be less than current date
                                     validator: (_, value) => {
                                         if (value > moment().startOf("day")) {
@@ -104,13 +109,10 @@ export default function Edit({ student, courses, user}) {
                                         }
                                         return Promise.resolve();
                                     },
-                                    
-                                }
+                                },
                             ]}
-                            
                             format="YYYY-MM-DD" // Specify the date format
                             // disable future dates and current date
-                           
                         />
 
                         <ProFormSelect
@@ -127,15 +129,11 @@ export default function Edit({ student, courses, user}) {
                                     label: "Female",
                                     value: "Female",
                                 },
-                              
                             ]}
                         />
-                        
-                        
-                            { user.role_id === 1 && (
-                                
-                            
-                                <ProFormSelect
+
+                        {auth.user.role_id === 1 && (
+                            <ProFormSelect
                                 width="sm"
                                 //select a course
                                 fieldProps={{
@@ -148,12 +146,36 @@ export default function Edit({ student, courses, user}) {
                                 name="course_id"
                                 label="Course"
                                 placeholder="Select a course"
-                                rules={[{ required: true }]}
+                                rules={[
+                                    
+                                    {
+                                        required: true,
+                                    },
+                                    {
+                                       //cannot add course if current course is not expired
+                                        validator: (_, value) => {
+                                            if (
+                                                !value.includes(
+                                                    student.current_course_id
+                                                )
+                                            ) {
+                                                return Promise.reject(
+                                                    new Error(
+                                                        "Cannot add or remove course if current course is not expired"
+                                                    )
+                                                );
+                                            }
+                                            return Promise.resolve();
+                                        },
+                                    },
+                                ]}
+                              
                                 // set initial values as they are in the database for this student
-                                initialValue={student.enrollments.map((enrollment) => enrollment.course_id)}
+                                initialValue={student.enrollments.map(
+                                    (enrollment) => enrollment.course_id
+                                )}
                             />
-                       
-                            )}
+                        )}
                     </ProForm.Group>
                 </ProForm>
             </ProCard>

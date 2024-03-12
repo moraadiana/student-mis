@@ -63,7 +63,7 @@ export default function Create({ user, courses, enrollments }) {
                             width="sm"
                             name="address"
                             label="Home Address"
-                            placeholder="Address"
+                            placeholder="ex. Nairobi"
                             rules={[
                                 {
                                     required: true,

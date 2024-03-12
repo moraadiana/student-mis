@@ -40,7 +40,7 @@ export default function Index({students,user}) {
                             return {
                                 data: students?.data,
                                 success: true,
-                                total: users?.total,
+                                total: students?.total,
                             };
                         }}
                         columns={[
@@ -122,7 +122,7 @@ export default function Index({students,user}) {
                             //             Delete
                             //         </Button>
                             //     ),
-                            // },
+                            //},
                         ]}
                         pagination={{
                             pageSize: students?.per_page,

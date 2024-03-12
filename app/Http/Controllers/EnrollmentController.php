@@ -13,15 +13,16 @@ class EnrollmentController extends Controller
     //
     public function index(Request $request)
     {
-         // Fetch enrollments with associated students and courses
-         $enrollments = Enrollment::with('student', 'course')->orderBy('created_at', 'desc')->paginate($request->pageSize);
+         // Fetch enrollments with associated students and courses 
+         $enrollments = Enrollment::with('student', 'course')
+         ->orderBy('created_at', 'desc')->paginate($request->pageSize);
 
-         // Fetch students for each course
-         $courses = Course::with('students')->get();
- 
+         //find student enrolled in a course
+    
          return Inertia::render('Enrollment/Index', [
-             'enrollment' => $enrollments,
-             'courses' => $courses,
+             'enrollment' => $enrollments ,
+             'courses' => Course::with('students')->get(),
+             'students' => Student::with('courses')->get(),
          ]);
     }
 

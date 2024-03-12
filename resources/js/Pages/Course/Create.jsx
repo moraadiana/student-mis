@@ -63,8 +63,20 @@ export default function Create({ courses }) {
                             placeholder="Start Date"
                             rules={[
                                 {
+                                    
                                     required: true,
                                 },
+                                {
+                                    //should be greater than today 
+                                    validator: (_, value) => {
+                                        if (value < new Date()) {
+                                            return Promise.reject("Start date should be greater than today");
+                                        }
+                                        return Promise.resolve();
+
+                                    }
+                                },
+
                             ]}
                             format="YYYY-MM-DD"
                         />
@@ -77,20 +89,20 @@ export default function Create({ courses }) {
                                 {
                                     required: true,
                                 },
+                                {
+                                    //should be greater than start date
+                                    validator: (_, value) => {
+                                        if (value < new Date()) {
+                                            return Promise.reject("End date should be greater than start date");
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
                             ]}
                             format="YYYY-MM-DD"
                         />
 
-                        {/* <ProFormDateRangePicker // Use RangePicker for start and end dates
-                            name={["start_date", "end_date"]}
-                            label="Select Dates"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                            dataFormat="YYYY-MM-DD"
-                        /> */}
+                       
                     </ProForm.Group>
                 </ProForm>
             </ProCard>

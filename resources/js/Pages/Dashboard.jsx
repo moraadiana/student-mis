@@ -11,7 +11,7 @@ export default function Dashboard({ auth })
 
         <Head title = "Dashboard"/>
         <ProCard
-        title={`Hi ${auth.user.username}`}
+        title={`Hi ${auth.user.email}`}
         headerBordered
         style={{width: '100%'}}
 
