@@ -68,8 +68,8 @@ export default function Edit({ student, courses, user, auth }) {
                         <ProFormText
                             width="sm"
                             name="address"
-                            label="Home "
-                            placeholder="Address"
+                            label="Home  Address"
+                            placeholder="ex. Nairobi"
                             rules={[
                                 {
                                     required: true,
@@ -98,7 +98,7 @@ export default function Edit({ student, courses, user, auth }) {
                                     required: true,
                                 },
                                 {
-                                    //must be less than current date
+                            
                                     validator: (_, value) => {
                                         if (value > moment().startOf("day")) {
                                             return Promise.reject(
@@ -111,8 +111,7 @@ export default function Edit({ student, courses, user, auth }) {
                                     },
                                 },
                             ]}
-                            format="YYYY-MM-DD" // Specify the date format
-                            // disable future dates and current date
+                            format="YYYY-MM-DD" 
                         />
 
                         <ProFormSelect

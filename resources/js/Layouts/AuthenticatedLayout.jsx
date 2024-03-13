@@ -73,7 +73,7 @@ export default function Authenticated({ children }) {
                    // hideInMenu: user.role_id === 2,
                    // visible for admin only
 
-                    hideInMenu: user.role_id === 2,
+                   hideInMenu: user.role_id === 2,
 
                     children: [
                         {

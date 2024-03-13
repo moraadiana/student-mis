@@ -20,8 +20,6 @@ class DashboardController extends Controller
         $allStudents = Student::with('courses', 'user')->get();
         $totalCoursesCount = Course::count();
         $allCourses = Course::with('enrollments', 'students')->get();
-       // $totalFemaleStudents = Student ::where('gender', 'Female')->count();
-        //$totalMaleStudents = Student::where('gender', 'Male')->count();
         $enrolledCourses = Enrollment ::count();
         $allEnrollments = Enrollment ::with('student', 'course') ->get();
         
