@@ -7,34 +7,37 @@ use App\Models\Enrollment;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
  
 class DashboardController extends Controller
 {
-    //
-    public function __invoke()
-    {
-        return Inertia::render('Dashboard' , [
-            'users' => User::all()
-           
-
-        ]);
-    }
-    public function index()
-    {
-        $totalStudentsCount = Student ::count();
+   
+    public function index( )
+    { 
+   
+        $totalStudentsCount = Student::count();
+        $allStudents = Student::with('courses', 'user')->get();
         $totalCoursesCount = Course::count();
-        $totalFemaleStudents = Student ::where('gender', 'Female')->count();
-        $totalMaleStudents = Student::where('gender', 'Male')->count();
-        $enrolledCourses = Enrollment ::with('student', 'course') ->get();
+        $allCourses = Course::with('enrollments', 'students')->get();
+       // $totalFemaleStudents = Student ::where('gender', 'Female')->count();
+        //$totalMaleStudents = Student::where('gender', 'Male')->count();
+        $enrolledCourses = Enrollment ::count();
+        $allEnrollments = Enrollment ::with('student', 'course') ->get();
         
         return Inertia::render('Dashboard',
     [
+        //'users' => User::all(),
         'totalStudentsCount' => $totalStudentsCount,
         'totalCoursesCount' => $totalCoursesCount,
-        'totalFemaleStudents' => $totalFemaleStudents,
-        'totalMaleStudents' => $totalMaleStudents,
+       // 'totalFemaleStudents' => $totalFemaleStudents,
+       // 'totalMaleStudents' => $totalMaleStudents,
         'enrolledCourses' => $enrolledCourses,
+        'allStudents' => $allStudents,
+        'allCourses' => $allCourses,
+        'allEnrollments' => $allEnrollments,
+        'courses' => Course::with('students')->get(),
+        'students' => Student::with('courses')->get(),
     ]);
     }
 }

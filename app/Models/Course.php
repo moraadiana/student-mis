@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Course extends Model
 {
-    use HasFactory;
-
+    //use HasFactory;
+    protected $table = 'courses';
     protected $fillable = [
         'name',
         'start_date',
