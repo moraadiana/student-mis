@@ -16,10 +16,10 @@ class CourseController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        if ($user->role->name == 'admin') {
+        if ($user->role->id == '1') {
             return Inertia::render('Course/Index', [
                 'courses' => Inertia::lazy(fn () => Course::with('enrollments')
-                    ->orderBy('created_at', 'desc')->paginate($request->pageSize)), 'user' => User::with('role')->find($user->id),
+                    ->orderBy('created_at', 'asc')->paginate($request->pageSize)), 'user' => User::with('role')->find($user->id),
             ]);
         } else
             return Inertia::render('Course/Index', [
@@ -28,7 +28,7 @@ class CourseController extends Controller
                     whereHas('enrollments', function ($query) use ($user) {
                         $query->where('student_id', $user->student->id);
                     })
-                    ->orderBy('created_at', 'desc')->paginate($request->pageSize)),
+                    ->orderBy('created_at', 'asc')->paginate($request->pageSize)),
                 'user' => User::with('role')->find($user->id),
             ]);
     }

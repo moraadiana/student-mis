@@ -67,42 +67,41 @@ export default function Authenticated({ children }) {
                 },
 
                 {
-                    path: "/admin",
-                    name: "Administration",
-                    icon: <DatabaseOutlined />,
-                   // hideInMenu: user.role_id === 2,
-                   // visible for admin only
-
-                   hideInMenu: user.role_id === 2,
-
+                    path: route("students.index"),
+                    name: "Students",
+                    icon: <FileDoneOutlined />,
+                },
+                {
+                    path: "/courses",
+                    name: "Courses",
+                    icon: <CheckSquareOutlined />,
                     children: [
                         {
-                            path: "/user",
-                            name: "User Accounts",
+                            path: route("courses.index"),
+                            name: "All Courses ",
                         },
-
-                           {
-                               path: "/enrollment",
-                               name: "Course Enrollments ",
-                           },
+                        {
+                            path: route("enrollments.index"),
+                            name: "Course Enrollments ",
+                            hideInMenu: user.role_id === 2,
+                        },
                     ],
                 },
                 {
-                    path: "/Profile",
-                    name: "Profile",
-                    icon: <FileDoneOutlined />,
+                    path: "/admin",
+                    name: "Administration",
+                    icon: <DatabaseOutlined />,
+                    // hideInMenu: user.role_id === 2,
+                    // visible for admin only
+
+                    hideInMenu: user.role_id === 2,
 
                     children: [
                         {
-                            path: "/student",
-                            name: "Personal Details",
-                        },
-                        {
-                            path: "/course",
-                            name: "My Courses",
+                            path: route("users.index"),
+                            name: "User Accounts",
                         },
                     ],
-                    // hideInMenu: user.role.id === 1,
                 },
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}

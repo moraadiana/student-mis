@@ -30,15 +30,15 @@ export default function Create({ courses }) {
                             return;
                         }
 
-                        router.post(route("course.store"), values,
+                        router.post(route("courses.store"), values,
                         {
                             onSuccess: () => {
                                 message.success("Course created successfully");
-                                router.get(route("course.index"));
+                                router.get(route("enrollments.index"));
                             },
                             onError: () => {
                                 message.error("Failed to create course");
-                                router.get(route("course.index"));
+                                router.get(route("enrollments.index"));
                             },
                         })
                         ;

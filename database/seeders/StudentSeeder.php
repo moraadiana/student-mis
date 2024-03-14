@@ -21,7 +21,7 @@ class StudentSeeder extends Seeder
             'contact' => '555-555-5555',
             'dob' => '1990-01-01',
             'gender' => 'Male',
-            'user_id' => 1
+            'user_id' => 2
 
         ]);
     }

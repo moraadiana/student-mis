@@ -8,7 +8,6 @@ import {
 import { Head, router } from "@inertiajs/react";
 
 export default function Edit({ roles, user }) {
-    console.log (user);
     return (
         <PageContainer
             header={{
@@ -16,42 +15,29 @@ export default function Edit({ roles, user }) {
                 onBack: () => window.history.back(),
             }}
         >
-            
             <Head title="Edit User" />
             <ProCard>
-            <ProForm
-                        onFinish={async (values) => {
-                            router.put(
-                                route("user.update", user.id),values,
-                                {
-                                    onSuccess: () => {
-                                        message.success("User updated successfully");
-                                        router.get(route("student.index"));
-                                    },
-                                    onError: () => {
-                                        message.error("Failed to update user");
-                                        router.get(route("student.index"));
-                                    },
-                                }
-                                
-                            
-                            );
-                        }}
-                        initialValues={user}
-                    >
+                <ProForm
+                    onFinish={async (values) => {
+                        router.put(
+                            route("users.update", user.id),
+                            values
+                            // {
+                            //     onSuccess: () => {
+                            //         message.success("User updated successfully");
+                            //         router.get(route("users.index"));
+
+                            //     },
+                            //     onError: () => {
+                            //         message.error("Failed to update user");
+                            //         router.get(route("users.index"));
+                            //     }
+                            // }
+                        );
+                    }}
+                    initialValues={user}
+                >
                     <ProForm.Group>
-                        {/* <ProFormText
-                            width="sm"
-                            name="username"
-                            label="Username"
-                            placeholder="Username"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                           
-                        /> */}
                         <ProFormText
                             width="sm"
                             name="email"
@@ -77,27 +63,28 @@ export default function Edit({ roles, user }) {
                                 {
                                     min: 10,
                                     max: 15,
-                                    message: "Password must be between 10 and 15 characters",
+                                    message:
+                                        "Password must be between 10 and 15 characters",
                                 },
                                 {
                                     //must contain at least one uppercase letter and one lowercase letter
                                     pattern: /^(?=.*[a-z])(?=.*[A-Z]).{10,15}$/,
-                                    message: "Password must contain at least one uppercase and one lowercase letter",
-
+                                    message:
+                                        "Password must contain at least one uppercase and one lowercase letter",
                                 },
                                 {
                                     //must contain at least one number
                                     pattern: /^(?=.*\d).{10,15}$/,
-                                    message: "Password must contain at least one number",
+                                    message:
+                                        "Password must contain at least one number",
                                 },
                                 {
                                     //must contain at least one special character
-                                    pattern: /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{10,15}$/,
-                                    message: "Password must contain at least one special character",
-                                }
-
-
-
+                                    pattern:
+                                        /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{10,15}$/,
+                                    message:
+                                        "Password must contain at least one special character",
+                                },
                             ]}
                         />
                         <ProFormSelect

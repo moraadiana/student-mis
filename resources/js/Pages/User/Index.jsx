@@ -2,8 +2,8 @@ import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
 
-export default function Index({users}) {
-   console.log(users);
+export default function Index({ users }) {
+    console.log(users);
     return (
         <>
             <Head title="Users" />
@@ -12,12 +12,11 @@ export default function Index({users}) {
                     title: "Users",
                     onBack: () => window.history.back(),
                 }}
-
                 extra={
                     <Space>
                         <Button
                             type="primary"
-                            onClick={() => router.get(route("user.create"))}
+                            onClick={() => router.get(route("users.create"))}
                         >
                             Add Administrator
                         </Button>
@@ -53,35 +52,26 @@ export default function Index({users}) {
                             {
                                 title: "Role",
                                 dataIndex: ["role", "name"],
-
                             },
                             // edit user link
-                            
-                                {
-                                    title: "Action",
-                                    dataIndex: "id",
-                                    hideInSearch: true,
-                                    render: (_, record) => (
-                                        <Link
-                                            href={route(
-                                                "user.edit",
-                                                record?.id
-                                            )}
-                                        >
-                                            Edit
-                                        </Link>
-                                    ),
-                                },
-                            
 
+                            {
+                                title: "Action",
+                                dataIndex: "id",
+                                hideInSearch: true,
+                                render: (_, record) => (
+                                    <Link
+                                        href={route("users.edit", record?.id)}
+                                    >
+                                        Edit
+                                    </Link>
+                                ),
+                            },
                         ]}
                         pagination={{
-                            //pageSize: users?.per_page,
                             total: users?.total,
                             defaultPageSize: 10,
                         }}
-                        //return what is being searched in the search bar
-                        
                         rowKey="id"
                         search={false}
                     />

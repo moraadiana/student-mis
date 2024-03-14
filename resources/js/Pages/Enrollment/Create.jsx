@@ -8,6 +8,7 @@ import {
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
 import { message } from "antd";
+import moment from "moment";
 
 export default function Create({ students, courses }) {
     return (
@@ -21,20 +22,16 @@ export default function Create({ students, courses }) {
             <ProCard>
                 <ProForm
                     onFinish={async (values) => {
-                        const formData = new FormData();
-                        formData.append("student_id", values.student_id);
-                        formData.append("course_id", values.course_id);
-
-                        router.post(route("enrollment.store"), formData, {
+                        router.post(route("enrollments.store"), values, {
                             onSuccess: () => {
                                 message.success(
                                     "Student enrolled successfully"
                                 );
-                                router.get(route("enrollment.index"));
+                                router.get(route("students.index"));
                             },
                             onError: () => {
                                 message.error("Failed to enroll student");
-                                router.get(route("enrollment.index"));
+                                router.get(route("students.index"));
                             },
                         });
                     }}
@@ -44,7 +41,6 @@ export default function Create({ students, courses }) {
                             width="sm"
                             //select a student
                             fieldProps={{
-                                mode: "multiple",
                                 options: students.map((student) => ({
                                     label: student.fname + " " + student.lname,
                                     value: student.id,
@@ -63,7 +59,6 @@ export default function Create({ students, courses }) {
                             width="sm"
                             //select a course
                             fieldProps={{
-                                mode: "multiple",
                                 options: courses.map((course) => ({
                                     label: course.name,
                                     value: course.id,
@@ -75,6 +70,9 @@ export default function Create({ students, courses }) {
                             rules={[
                                 {
                                     required: true,
+                                },
+                                {
+                                    //
                                 },
                             ]}
                         />

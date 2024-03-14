@@ -37,14 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('user', UserController::class);
+    Route::resource('users', UserController::class);
     // student route
-    Route::resource('student', StudentController::class);
+    Route::resource('students', StudentController::class);
     //course route
-    Route::resource('course', CourseController::class);
+    Route::resource('courses', CourseController::class);
 
     //enrollment route
-    Route::resource('enrollment', EnrollmentController::class);
+    Route::resource('enrollments', EnrollmentController::class);
 });
 
 //create a route for user management

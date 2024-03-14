@@ -10,8 +10,9 @@ export default function Dashboard({
     enrolledCourses,
     allStudents,
     allCourses,
-    allEnrollments,
+    $allEnrolledCourses,
 }) {
+    console.log($allEnrolledCourses);
     return (
         <>
             <Head title="Dashboard" />
@@ -89,7 +90,7 @@ export default function Dashboard({
                                                 render: (_, record) => (
                                                     <Link
                                                         href={route(
-                                                            "student.edit",
+                                                            "students.edit",
                                                             record?.id
                                                         )}
                                                     >
@@ -137,24 +138,6 @@ export default function Dashboard({
                                                 title: "Course Name",
                                                 dataIndex: "name",
                                             },
-                                            {
-                                                title: "Course Description",
-                                                dataIndex: "description",
-                                            },
-                                            {
-                                                title: "Action",
-                                                hideInSearch: true,
-                                                render: (_, record) => (
-                                                    <Link
-                                                        href={route(
-                                                            "course.edit",
-                                                            record?.id
-                                                        )}
-                                                    >
-                                                        Edit
-                                                    </Link>
-                                                ),
-                                            },
                                         ]}
                                         scroll={{
                                             x: true,
@@ -172,7 +155,7 @@ export default function Dashboard({
                                 label: (
                                     <Statistic
                                         layout="vertical"
-                                        title="Course Enrollments"
+                                        title="Enrolled Courses "
                                         value={enrolledCourses}
                                         total:true
                                         style={{
@@ -185,66 +168,27 @@ export default function Dashboard({
                                 children: (
                                     <ProTable
                                         size="small"
-                                        dataSource={allCourses}
+                                        dataSource={$allEnrolledCourses}
                                         columns={[
                                             {
-                                                title: "Course ID",
-                                                dataIndex: "id",
-                                            },
-                                            {
                                                 title: "Course Name",
-                                                dataIndex: "name",
+                                                dataIndex: ["course", "name"],
                                             },
                                             {
                                                 title: "start Date",
-                                                dataIndex: "start_date",
+                                                dataIndex: [
+                                                    "course",
+                                                    "start_date",
+                                                ],
                                             },
                                             {
                                                 title: "end Date",
-                                                dataIndex: "end_date",
+                                                dataIndex: [
+                                                    "course",
+                                                    "end_date",
+                                                ],
                                             },
                                         ]}
-                                        expandable={{
-                                            expandedRowRender: (record) => (
-                                                <ProTable
-                                                    dataSource={record.students}
-                                                    columns={[
-                                                        {
-                                                            title: "Student",
-                                                            // join fname and lname of student
-                                                            dataIndex: "fname",
-                                                            render: (
-                                                                _,
-                                                                record
-                                                            ) =>
-                                                                `${record.fname} ${record.lname}`,
-                                                        },
-                                                        {
-                                                            title: "Action",
-                                                            hideInSearch: true,
-                                                            render: (
-                                                                _,
-                                                                record
-                                                            ) => (
-                                                                <Link
-                                                                    href={route(
-                                                                        "student.edit",
-                                                                        record?.id
-                                                                    )}
-                                                                >
-                                                                    Edit
-                                                                </Link>
-                                                            ),
-                                                        },
-                                                    ]}
-                                                    rowKey="id"
-                                                    search={false}
-                                                    pagination={false}
-                                                    options={false}
-                                                    bordered
-                                                />
-                                            ),
-                                        }}
                                         // Pagination, rowKey, and other settings...
 
                                         rowKey="id"

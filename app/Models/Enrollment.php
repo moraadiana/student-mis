@@ -13,6 +13,7 @@ class Enrollment extends Model
     protected $fillable = [
         'student_id',
         'course_id',
+        'expiry_date'
     ];
 
     public function student():BelongsTo

@@ -23,19 +23,20 @@ export default function Edit({ courses }) {
                 <ProForm
                     onFinish={async (values) => {
                         router.put(
-                            route("course.update", courses.id),values,
+                            route("courses.update", courses.id),
+                            values,
                             {
                                 onSuccess: () => {
-                                    message.success("Course updated successfully");
-                                    router.get(route("course.index"));
+                                    message.success(
+                                        "Course updated successfully"
+                                    );
+                                    router.get(route("enrollments.index"));
                                 },
                                 onError: () => {
                                     message.error("Failed to update course");
-                                    router.get(route("course.index"));
+                                    router.get(route("enrollments.index"));
                                 },
                             }
-                        
-
                         );
                     }}
                     initialValues={courses}
@@ -49,7 +50,6 @@ export default function Edit({ courses }) {
                             rules={[{ required: true }]}
                         />
                         <ProFormDatePicker
-
                             width="sm"
                             name="start_date"
                             label="Start Date"
@@ -59,18 +59,13 @@ export default function Edit({ courses }) {
                         />
 
                         <ProFormDatePicker
-                         
                             width="sm"
                             name="end_date"
                             label="End Date"
                             placeholder="End Date"
                             rules={[{ required: true }]}
                             dataFormat="YYYY-MM-DD"
-
                         />
-
-
-
                     </ProForm.Group>
                 </ProForm>
             </ProCard>

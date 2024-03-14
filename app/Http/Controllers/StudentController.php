@@ -19,10 +19,10 @@ class StudentController extends Controller
         $user = Auth::user();
          
         // if role is admin show all students details
-        if ($user->role->name == 'admin') {
+        if ($user->role->id == 1) {
             return Inertia::render('Student/Index', [
                 'students' => Inertia::lazy(fn () => Student::with('user', 'courses', 'enrollments' )
-                ->orderBy('created_at', 'desc')->paginate($request->pageSize)),
+                ->orderBy('created_at', 'asc')->paginate($request->pageSize)),
                 'user' => User::with ('role')->find($user->id),
         ]);
                 
@@ -68,8 +68,7 @@ class StudentController extends Controller
             'gender' => 'required|in:Male,Female,Other',
             'address' => 'required|string|max:255',
             'contact' => 'required|string|max:20',
-            'course_id' => 'required|array',
-            'course_id.*' => 'exists:courses,id',
+            
         ]);
 
 
@@ -91,17 +90,7 @@ class StudentController extends Controller
             'address' => $request->input('address'),
             'contact' => $request->input('contact'),
         ]);
-        //retrieve the selected courses ids
-        $courseIds =  $request->input('course_id', []);
-
-        //enroll student to selected courses
-        
-        foreach ($courseIds as $courseId) {
-            $enrollment = new Enrollment();
-            $enrollment->student_id = $user->student->id;
-            $enrollment->course_id = $courseId;
-            $enrollment->save();
-        }
+       
     }
     public function edit(Student $student)
     {
@@ -129,17 +118,31 @@ class StudentController extends Controller
             'user_id' => $request->input('user_id'),
         ]);
 
-        //update selected courses
-        $courseIds =  $request->input('course_id', []);
-        $student->courses()->sync($courseIds);
+
+        //update selected  user email
+        $student->user->update([
+            'email' => $request->input('email'),
+        ]);
+        
     }
    // function to delete user and associated records
 
     public function destroy(Student $student)
     {
         $student->delete();
-        return redirect()->route('student.index')->with('success', 'Student deleted successfully');
+        return redirect()->route('students.index')->with('success', 'Student deleted successfully');
     }
 
+public function show(string $id)
+{
+    $student = Student::with('user', 'courses')->find($id);
+    return Inertia::render(
+        'Student/Show',
+        [
+            'student' => $student,
+            'courses' => Course::all()
+        ]
+    );
+}
  
 }

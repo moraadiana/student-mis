@@ -16,9 +16,12 @@ class UserSeeder extends Seeder
         //make user recode
         User::create([
             
-            'password' => bcrypt('admin'),
+            'password' => bcrypt('Password123.'),
             'email' => 'admin@gmail.com',
             'role_id' => 1
-        ]);
+        ],
+        
+    );
+        
     }
 }

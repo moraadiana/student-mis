@@ -2,9 +2,9 @@ import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button } from "antd";
 
-export default function Index({ enrollment, courses,  students }) {
+export default function Index({ enrollment, courses, students }) {
     //group students by course
-    
+
     console.log(students);
     return (
         <>
@@ -14,33 +14,9 @@ export default function Index({ enrollment, courses,  students }) {
                     title: "Enrolled Students in Courses",
                     onBack: () => window.history.back(),
                 }}
-                // extra={
-                //     <Space>
-                //         <Button
-                //             type="primary"
-                //             onClick={() =>
-                //                 router.get(route("enrollment.create"))
-                //             }
-                //         >
-                //             Enroll Student
-                //         </Button>
-                //     </Space>
-                // }
-                extra={
-                    
-                    <Space>
-                        <Button
-                            type="primary"
-                            onClick={() => router.get(route("course.create"))}
-                        >
-                            Add Course
-                        </Button>
-                    </Space>
-                    
-                }
             >
-                   <ProCard>
-                   <ProTable
+                <ProCard>
+                    <ProTable
                         headerTitle="Courses"
                         dataSource={courses}
                         request={async (params) => {
@@ -51,13 +27,12 @@ export default function Index({ enrollment, courses,  students }) {
                                 data: params,
                             });
                             return {
-                                data:courses,
+                                data: courses,
                                 success: true,
                                 total: courses.total,
                             };
                         }}
                         columns={[
-                           
                             {
                                 title: "Course ID",
                                 dataIndex: "id",
@@ -69,44 +44,23 @@ export default function Index({ enrollment, courses,  students }) {
                             {
                                 title: "start Date",
                                 dataIndex: "start_date",
-
                             },
                             {
                                 title: "end Date",
                                 dataIndex: "end_date",
                             },
-
-                           
                         ]}
                         expandable={{
                             expandedRowRender: (record) => (
                                 <ProTable
-                                    
                                     dataSource={record.students}
                                     columns={[
                                         {
                                             title: "Student",
-                                             // join fname and lname of student
-                                             dataIndex: "fname", 
-                                             render: (_, record) => `${record.fname} ${record.lname}`,
-
-
-                                            
+                                            dataIndex: "fname",
+                                            render: (_, record) =>
+                                                `${record.fname} ${record.lname}`,
                                         },
-                                        {
-                                        title: "Action",
-                                        hideInSearch: true,
-                                        render: (_, record) => (
-                                            <Link
-                                                href={route(
-                                                    "student.edit",
-                                                    record?.id
-                                                )}
-                                            >
-                                                Edit
-                                            </Link>
-                                        ),
-                                    },
                                     ]}
                                     rowKey="id"
                                     search={false}

@@ -23,18 +23,18 @@ export default function Edit({ student, courses, user, auth }) {
                 <ProForm
                     onFinish={async (values) => {
                         router.put(
-                            route("student.update", student.id),
+                            route("students.update", student.id),
                             values,
                             {
                                 onSuccess: () => {
                                     message.success(
                                         "Student updated successfully"
                                     );
-                                    router.get(route("student.index"));
+                                    router.get(route("students.index"));
                                 },
                                 onError: () => {
                                     message.error("Failed to update student");
-                                    router.get(route("student.index"));
+                                    router.get(route("students.index"));
                                 },
                             }
                         );
@@ -98,7 +98,6 @@ export default function Edit({ student, courses, user, auth }) {
                                     required: true,
                                 },
                                 {
-                            
                                     validator: (_, value) => {
                                         if (value > moment().startOf("day")) {
                                             return Promise.reject(
@@ -111,7 +110,7 @@ export default function Edit({ student, courses, user, auth }) {
                                     },
                                 },
                             ]}
-                            format="YYYY-MM-DD" 
+                            format="YYYY-MM-DD"
                         />
 
                         <ProFormSelect
@@ -130,51 +129,6 @@ export default function Edit({ student, courses, user, auth }) {
                                 },
                             ]}
                         />
-
-                        {auth.user.role_id === 1 && (
-                            <ProFormSelect
-                                width="sm"
-                                //select a course
-                                fieldProps={{
-                                    mode: "multiple",
-                                    options: courses.map((course) => ({
-                                        label: course.name,
-                                        value: course.id,
-                                    })),
-                                }}
-                                name="course_id"
-                                label="Course"
-                                placeholder="Select a course"
-                                rules={[
-                                    
-                                    {
-                                        required: true,
-                                    },
-                                    {
-                                       //cannot add course if current course is not expired
-                                        validator: (_, value) => {
-                                            if (
-                                                !value.includes(
-                                                    student.current_course_id
-                                                )
-                                            ) {
-                                                return Promise.reject(
-                                                    new Error(
-                                                        "Cannot add or remove course if current course is not expired"
-                                                    )
-                                                );
-                                            }
-                                            return Promise.resolve();
-                                        },
-                                    },
-                                ]}
-                              
-                                // set initial values as they are in the database for this student
-                                initialValue={student.enrollments.map(
-                                    (enrollment) => enrollment.course_id
-                                )}
-                            />
-                        )}
                     </ProForm.Group>
                 </ProForm>
             </ProCard>

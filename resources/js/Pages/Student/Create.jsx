@@ -23,14 +23,14 @@ export default function Create({ user, courses, enrollments }) {
             <ProCard>
                 <ProForm
                     onFinish={async (values) => {
-                        router.post(route("student.store"), values, {
+                        router.post(route("students.store"), values, {
                             onSuccess: () => {
                                 message.success("Student created successfully");
-                                router.get(route("student.index"));
+                                router.get(route("students.index"));
                             },
                             onError: () => {
                                 message.error("Failed to create student");
-                                router.get(route("student.index"));
+                                router.get(route("students.index"));
                             },
                         });
                     }}
@@ -104,20 +104,18 @@ export default function Create({ user, courses, enrollments }) {
                                 {
                                     //must be less than current date
                                     validator: (_, value) => {
-                                        if (value > moment().startOf("day")) {
+                                        if (value >= moment().startOf("year")) {
                                             return Promise.reject(
                                                 new Error(
-                                                    "Date of Birth must be less than current date"
+                                                    "Date of Birth must be less than current year"
                                                 )
                                             );
                                         }
                                         return Promise.resolve();
                                     },
-                                    
-                                }
+                                },
                             ]}
                             format="YYYY-MM-DD"
-                            
                         />
 
                         <ProFormSelect
@@ -142,7 +140,6 @@ export default function Create({ user, courses, enrollments }) {
                             }}
                         />
 
-                       
                         <ProFormText
                             width="sm"
                             name="email"
@@ -174,45 +171,27 @@ export default function Create({ user, courses, enrollments }) {
                                 {
                                     min: 10,
                                     max: 15,
-                                    message: "Password must be between 10 and 15 characters",
+                                    message:
+                                        "Password must be between 10 and 15 characters",
                                 },
                                 {
                                     //must contain at least one uppercase letter and one lowercase letter
                                     pattern: /^(?=.*[a-z])(?=.*[A-Z]).{10,15}$/,
-                                    message: "Password must contain at least one uppercase and one lowercase letter",
-
+                                    message:
+                                        "Password must contain at least one uppercase and one lowercase letter",
                                 },
                                 {
                                     //must contain at least one number
                                     pattern: /^(?=.*\d).{10,15}$/,
-                                    message: "Password must contain at least one number",
+                                    message:
+                                        "Password must contain at least one number",
                                 },
                                 {
                                     //must contain at least one special character
-                                    pattern: /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{10,15}$/,
-                                    message: "Password must contain at least one special character",
-                                }
-
-
-
-                            ]}
-                        />
-                        <ProFormSelect
-                            width="sm"
-                            //select a course
-                            fieldProps={{
-                                mode: "multiple",
-                                options: courses.map((course) => ({
-                                    label: course.name,
-                                    value: course.id,
-                                })),
-                            }}
-                            name="course_id"
-                            label="Course"
-                            placeholder="Select a course"
-                            rules={[
-                                {
-                                    required: true,
+                                    pattern:
+                                        /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{10,15}$/,
+                                    message:
+                                        "Password must contain at least one special character",
                                 },
                             ]}
                         />

@@ -20,9 +20,9 @@ class DashboardController extends Controller
         $allStudents = Student::with('courses', 'user')->get();
         $totalCoursesCount = Course::count();
         $allCourses = Course::with('enrollments', 'students')->get();
-        $enrolledCourses = Enrollment ::count();
-        $allEnrollments = Enrollment ::with('student', 'course') ->get();
-        
+        $enrolledCourses = Enrollment ::with('student', 'course') ->count();
+        $allEnrolledCourses = Enrollment ::with('student', 'course') ->get();
+      //  dd($allEnrolledCourses);
         return Inertia::render('Dashboard',
     [
         //'users' => User::all(),
@@ -31,9 +31,10 @@ class DashboardController extends Controller
        // 'totalFemaleStudents' => $totalFemaleStudents,
        // 'totalMaleStudents' => $totalMaleStudents,
         'enrolledCourses' => $enrolledCourses,
+        
         'allStudents' => $allStudents,
         'allCourses' => $allCourses,
-        'allEnrollments' => $allEnrollments,
+        '$allEnrolledCourses' => $allEnrolledCourses,
         'courses' => Course::with('students')->get(),
         'students' => Student::with('courses')->get(),
     ]);

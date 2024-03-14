@@ -6,7 +6,7 @@ import {
     ProFormText,
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
-import { message, Button} from "antd";
+import { message, Button } from "antd";
 
 export default function Create({ roles }) {
     return (
@@ -19,33 +19,20 @@ export default function Create({ roles }) {
             <Head title="Create User" />
             <ProCard>
                 <ProForm
-
-                
                     onFinish={async (values) => {
-                        router.post(route("user.store"), values, {
+                        router.post(route("users.store"), values, {
                             onSuccess: () => {
                                 message.success("User created successfully");
-                                router.get(route("user.index"));
+                                router.get(route("users.index"));
                             },
                             onError: () => {
                                 message.error("Failed to create user");
-                                router.get(route("user.index"));
+                                router.get(route("users.index"));
                             },
                         });
                     }}
                 >
                     <ProForm.Group>
-                        {/* <ProFormText
-                            width="sm"
-                            name="username"
-                            label="Username"
-                            placeholder="Username"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        /> */}
                         <ProFormText
                             width="sm"
                             name="email"

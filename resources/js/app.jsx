@@ -1,5 +1,5 @@
 import "./bootstrap";
-import "../css/app.css";
+//import "../css/app.css";
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import { ConfigProvider } from "antd";
@@ -27,7 +27,7 @@ createInertiaApp({
                 theme={{
                     token: {
                         fontFamily: "Lato, sans-serif",
-                        colorPrimary: "#153037",
+                       
                     },
                 }}
             >
@@ -36,6 +36,6 @@ createInertiaApp({
         );
     },
     progress: {
-        color: "#153037",
+        
     },
 });
